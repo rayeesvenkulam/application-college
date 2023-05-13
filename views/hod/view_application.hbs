@@ -59,6 +59,14 @@
                           {{data.application.description}}
                         </td>
                       </tr>
+                      <tr>
+
+                        <td class="text-success"><b>Tutor</b> </td>
+                        <td class="text-success">
+                          <b>{{data.application.tutor}}</b>
+                        </td>
+
+                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -78,7 +86,7 @@
 
             <div class="col-sm-12">
 
-              <form method="post" action="/tutor/application/approve-reject">
+              <form method="post" action="/hod/application/approve-reject">
                 <input type="hidden" name="id" value="{{data.application.id}}">
                 <div class="row mb-3">
                   <div class="col-sm-12">
@@ -86,16 +94,6 @@
                   </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
-                  <div class="col-sm-4">
-                    <div class="p-1">
-                      <select class="form-select" name="hod" aria-label="Default select example" required>
-                        <option value="">Select HOD</option>
-                        {{#each data.hod}}
-                        <option value="{{id}}">{{name}}</option>
-                        {{/each}}
-                      </select>
-                    </div>
-                  </div>
                   <div class="p-1">
                     <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
                   </div>

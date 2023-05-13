@@ -60,33 +60,36 @@ module.exports = {
         }
     },
 
-    // ensureNotUser: function (req, res, next) {
-    //     if (req.isAuthenticated()) {
-    //         if (req.user.Typ != "USER") {
-    //             return next();
-    //         }
-    //         else {
-    //             res.status(403).send("Access Denied");
-    //         }
-    //     }
-    //     else {
-    //         res.status(403).send("Access Denied");
-    //     }
-    // },
+    ensureHod: function (req, res, next) {
+        if (req.isAuthenticated()) {
+            if (req.user.typ == "HOD") {
+                return next();
+            }
+            else {
+                req.flash("error", "Unauthorized request. Please login");
+                res.redirect("/login");
+            }
+        }
+        else {
+            req.flash("error", "Unauthorized request. Please login");
+            res.redirect("/login");
+        }
+    },
 
-    // isDeveloper: function (req, res, next) {
-    //     if (req.isAuthenticated()) {
-    //         if (req.user.Typ == "DEVELOPER") {
-    //             return next();
-    //         }
-    //         else {
-    //             res.status(403).send("Access Denied");
-    //         }
-    //     }
-    //     else {
-    //         res.status(403).send("Access Denied");
-    //     }
-    // },
-
+    ensurePrincipal: function (req, res, next) {
+        if (req.isAuthenticated()) {
+            if (req.user.typ == "PRINCIPAL") {
+                return next();
+            }
+            else {
+                req.flash("error", "Unauthorized request. Please login");
+                res.redirect("/login");
+            }
+        }
+        else {
+            req.flash("error", "Unauthorized request. Please login");
+            res.redirect("/login");
+        }
+    },
 
 }

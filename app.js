@@ -13,6 +13,8 @@ const hbs = require('hbs');
 
 var indexRouter = require('./routes/index');
 var tutorRouter = require('./routes/tutorRoute');
+var hodRouter = require('./routes/hodRoute');
+var principalRouter = require('./routes/principalRoute');
 let authentication = require('./routes/authentication')
 
 
@@ -30,6 +32,9 @@ hbs.registerHelper('formatDate', function(date, format) {
 });
 hbs.registerHelper('gt', function(a, b) {
   return a > b;
+});
+hbs.registerHelper('eq', function(a, b) {
+  return a === b;
 });
 
 
@@ -57,6 +62,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/tutor', tutorRouter);
+app.use('/hod',hodRouter);
+app.use('/principal',principalRouter);
 app.use(authentication);
 
 

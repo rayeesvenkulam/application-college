@@ -57,25 +57,28 @@
                     <tr>
                       <th data-sortable="true" style="width: 5.638474295190713%;"><a href="#"
                           class="datatable-sorter">#</a></th>
-                      <th data-sortable="true" style="width: 28.026533996683252%;"><a href="#"
+                      <th data-sortable="true" style="width: 15.026533996683252%;"><a href="#"
                           class="datatable-sorter">Date</a></th>
-                      <th data-sortable="true" style="width: 28.026533996683252%;"><a href="#"
+                      <th data-sortable="true" style="width: 25.026533996683252%;"><a href="#"
                           class="datatable-sorter">Student Name</a></th>
-                      <th data-sortable="true" style="width: 37.81094527363184%;"><a href="#"
+                      <th data-sortable="true" style="width: 25.026533996683252%;"><a href="#"
+                          class="datatable-sorter">Tutor Name</a></th>
+                      <th data-sortable="true" style="width: 20.81094527363184%;"><a href="#"
                           class="datatable-sorter">Application Type</a></th>
 
-                      <th data-sortable="true" style="width: 19.237147595356554%;"><a href="#"
+                      <th data-sortable="true" style="width: 10.237147595356554%;"><a href="#"
                           class="datatable-sorter">Action</a></th>
                     </tr>
                   </thead>
                   <tbody>
                     {{#each data.applications}}
-                    <tr data-index="{{@index}}" {{#if (eq status 'Rejected by HOD')}}class="table-danger"{{/if}}>
+                    <tr data-index="{{@index}}">
                       <td>{{@index}}</td>
                       <td>{{formatDate request_date "DD-MM-YYYY"}}</td>
                       <td>{{name}}</td>
+                      <td>{{tutor}}</td>
                       <td>{{type_name}}</td>
-                      <td><a href="/tutor/application/view?id={{id}}"><button type="button"
+                      <td><a href="/hod/application/view?id={{id}}"><button type="button"
                             class="btn btn-primary btn-sm">
                             view
                           </button> </a>
