@@ -1,0 +1,114 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>View Application</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item active">Elements</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">view Application</h5>
+
+            <div class="row">
+              <div class="col-sm-8">
+                <center><b>Student's Application for Services From Office</b></center><br>
+                <div class="table-responsive">
+                  <table class="table ">
+                    <tbody>
+                      <tr>
+                        <td></td>
+                        <td>{{formatDate data.application.request_date "DD-MM-YYYY"}}</td>
+                      </tr>
+                      <tr>
+                        <td>Name</td>
+                        <td>{{data.application.name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Brach of Studey & Semester</td>
+                        <td>{{data.application.branch}} - {{data.application.semester}}</td>
+                      </tr>
+                      <tr>
+                        <td>Adm No & Year</td>
+                        <td>{{data.application.adm_number}} - {{data.application.adm_year}}</td>
+                      </tr>
+                      <tr>
+                        <td>Quota</td>
+                        <td>{{data.application.quota}}</td>
+                      </tr>
+                      <tr>
+                        <td>University Reg No</td>
+                        <td>{{data.application.university_no}} </td>
+                      </tr>
+                      <tr>
+                        <td>Mobile Numbers</td>
+                        <td>{{data.application.mobile1}} , {{data.application.mobile2}}</td>
+                      </tr>
+                      <tr>
+                        <td>Request Description</td>
+                        <td>
+                          {{data.application.description}}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <h5>Images</h5>
+                {{data.application.request_files}}
+                <div class="row">
+                  {{#each data.application.request_files as |file|}}
+                  <img src="{{file}}">
+                  {{/each}}
+
+                  <div class="col-4">
+                    <img src="image2.jpg" alt="Image 2">
+                  </div>
+                  <div class="col-4">
+                    <img src="image3.jpg" alt="Image 3">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+
+              <form method="post" action="/tutor/application/approve-reject">
+                <input type="hidden" name="id" value="{{data.application.id}}">
+                <div class="row mb-3">
+                  <div class="col-sm-12">
+                    <textarea class="form-control" name="comment"></textarea>
+                  </div>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <select class="form-select" name="type" aria-label="Default select example">
+                    <option value="">Select Application Type</option>
+                    {{#each data.types}}
+                    <option value="{{id}}">{{type_name}}</option>
+                    {{/each}}
+                  </select>
+                  <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
+                  <button type="submit" class="btn btn-success" name="action" value="approve">Approve</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>

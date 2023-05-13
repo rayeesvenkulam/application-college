@@ -1,0 +1,76 @@
+<main id="main" class="main">
+
+  <div class="pagetitle">
+    <h1>New Application</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item active">Elements</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Apply New</h5>
+            <!-- General Form Elements -->
+            <form action="" method="post" enctype="multipart/form-data">
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Application Type</label>
+                <div class="col-sm-10">
+                  <select class="form-select" name="type" aria-label="Default select example">
+                    <option value="">Select Application Type</option>
+                    {{#each data.types}}
+                    <option value="{{id}}">{{type_name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Tutor</label>
+                <div class="col-sm-10">
+                  <select class="form-select" name="tutor" aria-label="Default select example">
+                    <option value="">Select Tutor</option>
+                    {{#each data.tutor}}
+                    <option value="{{id}}">{{name}}</option>
+                    {{/each}}
+                  </select>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label class="col-sm-2 col-form-label">Description</label>
+                <div class="col-sm-10">
+                  <textarea class="form-control" style="height: 100px" name="description"></textarea>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <label for="inputNumber" class="col-sm-2 col-form-label">Images Upload</label>
+                <div class="col-sm-10">
+                  <input class="form-control" type="file" id="formFile" name="files" multiple>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                {{!-- <label class="col-sm-2 col-form-label">Submit Button</label> --}}
+                <div class="col-sm-10">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+
+            </form><!-- End General Form Elements -->
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
