@@ -21,7 +21,7 @@ router.get('/application/view', ensureTutor, function (req, res, next) {
   var sql = "SELECT c.id,c.description,c.request_date,c.request_files,s.name,s.branch,s.semester,s.adm_number,s.adm_year,s.quota,s.university_no,s.mobile1,s.mobile2,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.id=? AND c.student_id=s.user_id AND c.application_type = t.id; SELECT id,name FROM application_users WHERE typ='HOD' AND stat != true;";
   db.query(sql, req.query.id, function (error, result) {
     if (error) throw error;
-    res.render('tutor/view_application', { data: { application: result[0] }, layout: 'tutor/tutor_layout' });
+    res.render('tutor/view_application', { data: { application: result[0], hod: result[1]}, layout: 'tutor/tutor_layout' });
   });
 });
 

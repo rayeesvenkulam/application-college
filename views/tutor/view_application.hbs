@@ -94,8 +94,8 @@
                 <div class="col-12 d-flex justify-content-end">
                   <select class="form-select" name="type" aria-label="Default select example">
                     <option value="">Select Application Type</option>
-                    {{#each data.types}}
-                    <option value="{{id}}">{{type_name}}</option>
+                    {{#each data.hod}}
+                    <option value="{{id}}">{{name}}</option>
                     {{/each}}
                   </select>
                   <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
