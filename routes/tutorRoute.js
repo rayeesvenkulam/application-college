@@ -10,7 +10,7 @@ router.get('/dashboard', ensureTutor, function (req, res, next) {
 });
 
 router.get('/applications', ensureTutor, function (req, res, next) {
-  var sql = "SELECT c.*,s.name,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.tutor_id=? AND c.student_id=s.user_id AND c.application_type = t.id";
+  var sql = "SELECT c.*,s.name,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.tutor_id=? AND c.current_reviewer='Tutor' AND c.student_id=s.user_id AND c.application_type = t.id";
   db.query(sql, req.user.id, function (error, result) {
     if (error) throw error;
     res.render('tutor/applications', { data: { applications: result }, layout: 'tutor/tutor_layout' });
@@ -21,7 +21,8 @@ router.get('/application/view', ensureTutor, function (req, res, next) {
   var sql = "SELECT c.id,c.description,c.request_date,c.request_files,s.name,s.branch,s.semester,s.adm_number,s.adm_year,s.quota,s.university_no,s.mobile1,s.mobile2,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.id=? AND c.student_id=s.user_id AND c.application_type = t.id; SELECT id,name FROM application_users WHERE typ='HOD' AND stat != true;";
   db.query(sql, req.query.id, function (error, result) {
     if (error) throw error;
-    res.render('tutor/view_application', { data: { application: result[0], hod: result[1]}, layout: 'tutor/tutor_layout' });
+    let imgArray = JSON.parse(result[0][0].request_files);
+    res.render('tutor/view_application', { data: { application: result[0][0], hod: result[1], images:imgArray}, layout: 'tutor/tutor_layout' });
   });
 });
 
@@ -49,7 +50,7 @@ router.post('/application/approve-reject', ensureTutor, function (req, res, next
   db.query(sql, [data, req.body.id], function (error, result) {
     if (error) throw error;
     if (result.affectedRows > 0) {
-      var sql1 = "SELECT c.*,s.name,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.tutor_id=? AND c.student_id=s.user_id AND c.application_type = t.id";
+      var sql1 = "SELECT c.*,s.name,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.tutor_id=? AND c.current_reviewer='Tutor' AND c.student_id=s.user_id AND c.application_type = t.id";
       db.query(sql1, req.user.id, function (error, result1) {
         if (error) throw error;
         req.flash("success", "You are now logged in!");

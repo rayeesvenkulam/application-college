@@ -94,6 +94,12 @@ router.post(
         else if(req.user.typ =="TUTOR"){
             return res.redirect("/tutor/dashboard");
         }
+        else if(req.user.typ =="HOD"){
+            return res.redirect("/hod/dashboard");
+        }
+        else if(req.user.typ =="PRINCIPAL"){
+            return res.redirect("/principal/dashboard");
+        }
 
     });
 

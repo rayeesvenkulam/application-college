@@ -4,13 +4,20 @@ const { ensureStudent } = require("../config/auth");
 const multer = require('multer');
 var db = require("../config/db-config");
 const moment = require('moment');
+const fs = require('fs');
+
+const uploadDir = 'public/uploads';
+if (!fs.existsSync(uploadDir)) {
+  // Create the directory if it doesn't exist
+  fs.mkdirSync(uploadDir);
+}
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads');
+    cb(null, 'public/uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "_" + Date.now() + file.originalname);
+    cb(null, "/" + file.fieldname + "_" + Date.now() + file.originalname);
   }
 });
 
@@ -38,7 +45,7 @@ router.post('/application/new', ensureStudent, upload.array('files'), function (
   // console.log(req.files);
   //  console.log(req.body.type);
   //  return;
-  const filepaths = req.files.map(file => file.path); // get an array of file paths
+  const filepaths = req.files.map(file => "/uploads"+file.filename); // get an array of file paths
   const filepathJSON = JSON.stringify(filepaths); // convert the array into a JSON string
   const data = {
     "application_type": req.body.type,
