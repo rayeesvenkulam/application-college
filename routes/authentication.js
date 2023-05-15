@@ -100,6 +100,12 @@ router.post(
         else if(req.user.typ =="PRINCIPAL"){
             return res.redirect("/principal/dashboard");
         }
+        else if(req.user.typ =="OFFICE"){
+            return res.redirect("/office/dashboard");
+        }
+        else if(req.user.typ =="ADMIN"){
+            return res.redirect("/admin/dashboard");
+        }
 
     });
 
