@@ -38,14 +38,19 @@ router.get('/application/new', ensureStudent, function (req, res, next) {
 });
 
 router.get('/application/status', ensureStudent, function (req, res, next) {
-  res.render('student/application_status', { layout: 'student/student_layout' });
+  var sql = "SELECT c.*,u.name AS tutor,t.type_name FROM application_certificate c,  application_types t, application_users u WHERE c.student_id=? AND c.tutor_id= u.id  AND c.application_type = t.id";
+  db.query(sql, req.user.id, function (error, result) {
+    if (error) throw error;
+    res.render('student/application_status', { data: { applications: result }, layout: 'student/student_layout' });
+  });
+
 });
 
 router.post('/application/new', ensureStudent, upload.array('files'), function (req, res, next) {
   // console.log(req.files);
   //  console.log(req.body.type);
   //  return;
-  const filepaths = req.files.map(file => "/uploads"+file.filename); // get an array of file paths
+  const filepaths = req.files.map(file => "/uploads" + file.filename); // get an array of file paths
   const filepathJSON = JSON.stringify(filepaths); // convert the array into a JSON string
   const data = {
     "application_type": req.body.type,

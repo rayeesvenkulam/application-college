@@ -92,4 +92,35 @@ module.exports = {
         }
     },
 
+    ensureOffice: function (req, res, next) {
+        if (req.isAuthenticated()) {
+            if (req.user.typ == "OFFICE") {
+                return next();
+            }
+            else {
+                req.flash("error", "Unauthorized request. Please login");
+                res.redirect("/login");
+            }
+        }
+        else {
+            req.flash("error", "Unauthorized request. Please login");
+            res.redirect("/login");
+        }
+    },
+    ensureAdmin: function (req, res, next) {
+        if (req.isAuthenticated()) {
+            if (req.user.typ == "ADMIN") {
+                return next();
+            }
+            else {
+                req.flash("error", "Unauthorized request. Please login");
+                res.redirect("/login");
+            }
+        }
+        else {
+            req.flash("error", "Unauthorized request. Please login");
+            res.redirect("/login");
+        }
+    },
+
 }

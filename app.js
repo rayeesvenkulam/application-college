@@ -15,6 +15,8 @@ var indexRouter = require('./routes/index');
 var tutorRouter = require('./routes/tutorRoute');
 var hodRouter = require('./routes/hodRoute');
 var principalRouter = require('./routes/principalRoute');
+var officeRouter = require('./routes/officeRoute');
+var adminRouter = require('./routes/adminRoute');
 let authentication = require('./routes/authentication')
 
 
@@ -64,6 +66,8 @@ app.use('/', indexRouter);
 app.use('/tutor', tutorRouter);
 app.use('/hod',hodRouter);
 app.use('/principal',principalRouter);
+app.use('/office',officeRouter);
+app.use('/admin',adminRouter);
 app.use(authentication);
 
 
