@@ -1,14 +1,14 @@
-var createError = require('http-errors');
+const createError = require('http-errors');
 const passport = require('passport');
 const express = require("express");
 const session = require('express-session');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const flash = require('express-flash');
 const connectFlash = require('connect-flash');
 const bodyParser = require('body-parser');
-const moment = require('moment'); // Import the moment.js library
+const moment = require('moment');
 const hbs = require('hbs');
 
 var indexRouter = require('./routes/index');
@@ -19,17 +19,32 @@ var officeRouter = require('./routes/officeRoute');
 var adminRouter = require('./routes/adminRoute');
 let authentication = require('./routes/authentication')
 
-
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
+// Configure the session middleware
+app.use(session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 600000 }
+}));
 
-// Define the formatDate helper
+// Initialize Passport and session
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Define the addUserNameToLocals middleware
+const addUserNameToLocals = function (req, res, next) {
+  res.locals.userName = req.user ? req.user.name : '';
+  next();
+};
+
+// Register the helpers and middleware
 hbs.registerHelper('formatDate', function(date, format) {
-  // Use moment.js to format the date
   return moment(date).format(format);
 });
 hbs.registerHelper('gt', function(a, b) {
@@ -38,20 +53,17 @@ hbs.registerHelper('gt', function(a, b) {
 hbs.registerHelper('eq', function(a, b) {
   return a === b;
 });
-
+hbs.registerHelper('range', function(start, end) {
+  var result = [];
+  for (var i = start; i <= end; i++) {
+    result.push(i);
+  }
+  return result;
+});
 
 app.use(cookieParser('secret'));
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 600000 }
-}));
 app.use(connectFlash());
 app.use(flash());
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -62,37 +74,23 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(addUserNameToLocals); // Add the addUserNameToLocals middleware here
+
 app.use('/', indexRouter);
 app.use('/tutor', tutorRouter);
-app.use('/hod',hodRouter);
-app.use('/principal',principalRouter);
-app.use('/office',officeRouter);
-app.use('/admin',adminRouter);
+app.use('/hod', hodRouter);
+app.use('/principal', principalRouter);
+app.use('/office', officeRouter);
+app.use('/admin', adminRouter);
 app.use(authentication);
 
-
-
-// app.use(session({
-//   resave: false,
-//   saveUninitialized: true,
-//   secret: 'newSecretz'
-// }));
-
-
-
-
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
