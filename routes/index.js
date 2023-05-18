@@ -26,7 +26,12 @@ const upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', ensureStudent, function (req, res, next) {
-  res.render('student/dashboard', { layout: 'student/student_layout' });
+  var sql = "SELECT * FROM application_students WHERE user_id=?";
+  db.query(sql, req.user.id, function (error, result) {
+    if (error) throw error;
+    return res.render('student/dashboard', {data: result[0], layout: 'student/student_layout' });
+  });
+  
 });
 
 router.get('/application/new', ensureStudent, function (req, res, next) {
@@ -47,9 +52,7 @@ router.get('/application/status', ensureStudent, function (req, res, next) {
 });
 
 router.post('/application/new', ensureStudent, upload.array('files'), function (req, res, next) {
-  // console.log(req.files);
-  //  console.log(req.body.type);
-  //  return;
+
   const filepaths = req.files.map(file => "/uploads" + file.filename); // get an array of file paths
   const filepathJSON = JSON.stringify(filepaths); // convert the array into a JSON string
   const data = {
@@ -67,8 +70,16 @@ router.post('/application/new', ensureStudent, upload.array('files'), function (
     var sql1 = "SELECT id,name FROM application_users WHERE typ='TUTOR' AND stat != true; SELECT * FROM application_types WHERE stat != true;";
     db.query(sql1, function (error, result1) {
       if (error) throw error;
-      res.render('student/new_application', { data: { tutor: result1[0], types: result1[1] }, layout: 'student/student_layout' });
+      return res.render('student/new_application', { data: { tutor: result1[0], types: result1[1] }, layout: 'student/student_layout' });
     });
+  });
+});
+
+router.get('/application/view', ensureStudent, function (req, res, next) {
+  var sql = "SELECT c.*, u1.name AS tutor, u2.name AS HOD, t.type_name FROM application_certificate c JOIN application_users u1 ON c.tutor_id=u1.id JOIN application_users u2 ON c.hod_id=u2.id JOIN application_types t ON c.application_type=t.id WHERE c.id = ?;";
+  db.query(sql, req.query.id, function (error, result) {
+    if (error) throw error;
+    res.render('student/view_application_status', { data: result[0], layout: 'student/student_layout' });
   });
 });
 

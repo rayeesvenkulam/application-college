@@ -60,6 +60,14 @@ hbs.registerHelper('range', function(start, end) {
   }
   return result;
 });
+hbs.registerHelper('or', function(a, b, options) {
+  return a || b ? options.fn(this) : '';
+});
+hbs.registerHelper('isPDF', function(url) {
+  return url.toLowerCase().endsWith('.pdf');
+});
+
+
 
 app.use(cookieParser('secret'));
 app.use(connectFlash());

@@ -1,0 +1,108 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>View Application Status</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item">Forms</li>
+        <li class="breadcrumb-item active">Elements</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+
+
+            <div class="row d-flex justify-content-center mt-20 mb-70">
+
+              <div class="col-md-8">
+
+                <div class="">
+                  <div class="card-body">
+                    <h5 class="card-title">Application Status</h5>
+                    <div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">
+                      <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                          <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"></i>
+                          </span>
+                          <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title text-success">Student</h4>
+                            <p>Application sent</p>
+                            <span class="vertical-timeline-element-date">9:30 AM</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                          <span class="vertical-timeline-element-icon bounce-in">
+                            <i
+                              class="badge badge-dot badge-dot-xl {{#unless (or (eq data.current_reviewer 'Student') (eq data.current_reviewer 'Tutor'))}}bg-warning{{/unless}}{{#if (eq data.status 'Rejected by Tutor')}}bg-danger{{else}}bg-success{{/if}}">.</i>
+
+                          </span>
+                          <div class="vertical-timeline-element-content bounce-in" data-bs-toggle="tooltip"
+                            data-bs-placement="top" data-bs-original-title="{{data.tutor_comments}}">
+                            <h4 class="timeline-title text-success">Tutor</h4>
+                            <p>Yet another one, at <span class="text-success">5:00 PM</span></p>
+                            <span class="vertical-timeline-element-date">12:25 PM</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                          <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-danger"> </i>
+                          </span>
+                          <div class="vertical-timeline-element-content bounce-in" data-bs-toggle="tooltip"
+                            data-bs-placement="top" data-bs-original-title="{{data.hod_comments}}">
+                            <h4 class="timeline-title text-success">HOD</h4>
+                            <p>meeting with team mates about the launch of new product. and tell them about new features
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                          <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-primary"> </i>
+                          </span>
+                          <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title text-success">Principal</h4>
+                            <p>Discussion with marketing team about the popularity of last product</p>
+                            <span class="vertical-timeline-element-date">9:00 AM</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="vertical-timeline-item vertical-timeline-element">
+                        <div>
+                          <span class="vertical-timeline-element-icon bounce-in">
+                            <i class="badge badge-dot badge-dot-xl badge-success"> </i>
+                          </span>
+                          <div class="vertical-timeline-element-content bounce-in">
+                            <h4 class="timeline-title">Office</h4>
+                            <p>Purchase new hosting plan as discussed with development team, today at <a
+                                href="javascript:void(0);" data-abc="true">10:00 AM</a></p>
+                            <span class="vertical-timeline-element-date">10:30 PM</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end card -->
+      </div>
+    </div>
+  </div>
+
+
+</main>

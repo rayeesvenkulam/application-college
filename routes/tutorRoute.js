@@ -10,6 +10,7 @@ router.get('/dashboard', ensureTutor, function (req, res, next) {
 });
 
 router.get('/applications', ensureTutor, function (req, res, next) {
+  console.log(req.user.id);
   var sql = "SELECT c.*,s.name,t.type_name FROM application_certificate c, application_students s, application_types t WHERE c.tutor_id=? AND c.current_reviewer='Tutor' AND c.student_id=s.user_id AND c.application_type = t.id";
   db.query(sql, req.user.id, function (error, result) {
     if (error) throw error;

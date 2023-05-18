@@ -62,13 +62,15 @@
                       <tr>
                         <td class="text-success"><b>Tutor</b> </td>
                         <td class="text-success">
-                          <b>{{data.application.tutor}}</b>
+                          <b data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="{{data.application.tutor_comments}}">{{data.application.tutor}}</b>
                         </td>
                       </tr>
                       <tr>
                         <td class="text-success"><b>HOD</b> </td>
                         <td class="text-success">
-                          <b>{{data.application.HOD}}</b>
+                          <b data-bs-toggle="tooltip" data-bs-placement="top"
+                            data-bs-original-title="{{data.application.hod_comments}}">{{data.application.HOD}}</b>
                         </td>
                       </tr>
                     </tbody>
@@ -78,13 +80,17 @@
 
               <div class="col-sm-4">
                 <h5>Images</h5>
-                <div class="row">
-                  {{#each data.images }}
-                  <a href="{{ this }}" download>
-                    <img src="{{ this }}" class="img-fluid my-2">
-                  </a>
-                  {{/each}}
-                </div>
+                {{#each data.images }}
+                {{#if (isPDF this)}}
+                <a href="{{ this }}" download class="btn btn-primary">
+                  Download PDF
+                </a>
+                {{else}}
+                <a href="{{ this }}" download>
+                  <img src="{{ this }}" class="img-fluid my-2">
+                </a>
+                {{/if}}
+                {{/each}}
               </div>
             </div>
 
@@ -101,11 +107,12 @@
                   <div class="p-1">
                     <button type="submit" class="btn btn-danger" name="action" value="reject">Reject</button>
                   </div>
-                   <div class="p-1">
+                  <div class="p-1">
                     <button type="submit" class="btn btn-success" name="action" value="issued">Issue</button>
                   </div>
                   <div class="p-1">
-                    <button type="submit" class="btn btn-secondary" name="action" value="issuedOffice">Issue from Office</button>
+                    <button type="submit" class="btn btn-secondary" name="action" value="issuedOffice">Issue from
+                      Office</button>
                   </div>
                 </div>
               </form>
