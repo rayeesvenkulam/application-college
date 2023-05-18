@@ -66,14 +66,20 @@
 
               <div class="col-sm-4">
                 <h5>Images</h5>
-                <div class="row">
-                  {{#each data.images }}
-                  <a href="{{ this }}" download>
-                    <img src="{{ this }}" class="img-fluid my-2">
-                  </a>
-                  {{/each}}
-                </div>
+                {{#each data.images }}
+                {{#if (isPDF this)}}
+                <a href="{{ this }}" download class="btn btn-primary">
+                  Download PDF
+                </a>
+                {{else}}
+                <a href="{{ this }}" download>
+                  <img src="{{ this }}" class="img-fluid my-2">
+                </a>
+                {{/if}}
+                {{/each}}
               </div>
+
+
             </div>
 
             <div class="col-sm-12">

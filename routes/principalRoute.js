@@ -17,7 +17,7 @@ router.get('/applications', ensurePrincipal, function (req, res, next) {
 });
 
 router.get('/application/view', ensurePrincipal, function (req, res, next) {
-  var sql = "SELECT c.id, c.description, c.request_date, c.request_files, s.name, u1.name AS tutor, u2.name AS HOD, s.branch, s.semester, s.adm_number, s.adm_year, s.quota, s.university_no, s.mobile1, s.mobile2, t.type_name FROM application_certificate c JOIN application_students s ON c.student_id=s.user_id JOIN application_users u1 ON c.tutor_id=u1.id JOIN application_users u2 ON c.hod_id=u2.id JOIN application_types t ON c.application_type=t.id WHERE c.id = ?;";
+  var sql = "SELECT c.id,c.tutor_comments,c.hod_comments, c.description, c.request_date, c.request_files, s.name, u1.name AS tutor, u2.name AS HOD, s.branch, s.semester, s.adm_number, s.adm_year, s.quota, s.university_no, s.mobile1, s.mobile2, t.type_name FROM application_certificate c JOIN application_students s ON c.student_id=s.user_id JOIN application_users u1 ON c.tutor_id=u1.id JOIN application_users u2 ON c.hod_id=u2.id JOIN application_types t ON c.application_type=t.id WHERE c.id = ?;";
   db.query(sql, req.query.id, function (error, result) {
     if (error) throw error;
     let imgArray = JSON.parse(result[0].request_files);
